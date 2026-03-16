@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Report from './pages/Report';
 import {
   createReportRequest,
+  deleteReportRequest,
   getLeaderboardRequest,
   getReportsRequest,
   loginRequest,
@@ -99,6 +100,11 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
     navigate('/history');
   };
 
+  const handleDeleteReport = async (reportId: number) => {
+    await deleteReportRequest(reportId);
+    await refreshData();
+  };
+
   return (
     <div className="min-h-screen bg-app text-slate-900">
       <Navbar currentUser={currentUser} onLogout={handleLogout} />
@@ -112,7 +118,7 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
           path="/report"
           element={currentUser ? <Report appliances={appliances} users={users} currentUser={currentUser} onSubmit={handleReportSubmit} /> : <Navigate to="/" replace />}
         />
-        <Route path="/history" element={currentUser ? <History reports={reports} /> : <Navigate to="/" replace />} />
+        <Route path="/history" element={currentUser ? <History reports={reports} onDeleteReport={handleDeleteReport} /> : <Navigate to="/" replace />} />
       </Routes>
     </div>
   );

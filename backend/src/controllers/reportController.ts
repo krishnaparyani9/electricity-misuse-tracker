@@ -156,3 +156,23 @@ export const getLeaderboard = async (_req: Request, res: Response) => {
     return res.status(500).json({ message: 'Database error while fetching leaderboard.' });
   }
 };
+
+export const deleteReport = async (req: Request, res: Response) => {
+  const reportId = Number(req.params.id);
+
+  if (!Number.isInteger(reportId) || reportId <= 0) {
+    return res.status(400).json({ message: 'Invalid report id.' });
+  }
+
+  try {
+    const deleted = await ReportModel.findOneAndDelete({ reportId });
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Report not found.' });
+    }
+
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ message: 'Database error while deleting report.' });
+  }
+};

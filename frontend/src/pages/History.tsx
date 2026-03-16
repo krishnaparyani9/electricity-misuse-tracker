@@ -4,6 +4,7 @@ import type { Report } from '../types';
 
 type HistoryProps = {
   reports: Report[];
+  onDeleteReport: (reportId: number) => Promise<void>;
 };
 
 const formatDate = (value: string) =>
@@ -15,7 +16,7 @@ const formatDate = (value: string) =>
 const apiBaseUrl = getApiBaseUrl();
 const getEvidenceUrl = (value: string) => (value.startsWith('http') ? value : `${apiBaseUrl}${value}`);
 
-const History: React.FC<HistoryProps> = ({ reports }) => (
+const History: React.FC<HistoryProps> = ({ reports, onDeleteReport }) => (
   <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div className="mb-6">
       <p className="badge">History</p>
@@ -33,7 +34,16 @@ const History: React.FC<HistoryProps> = ({ reports }) => (
               <h3 className="mt-2 text-2xl font-black text-slate-950">{report.applianceName}</h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">{report.notes || 'No extra notes attached.'}</p>
             </div>
-            <p className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">Rs. {report.fine}</p>
+            <div className="flex items-center gap-2">
+              <p className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">Rs. {report.fine}</p>
+              <button
+                type="button"
+                onClick={() => onDeleteReport(report.id)}
+                className="rounded-full border border-rose-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-rose-600 transition hover:border-rose-600 hover:bg-rose-50"
+              >
+                Delete
+              </button>
+            </div>
           </div>
           <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-600">
             <span className="rounded-full bg-slate-100 px-3 py-2">Responsible: {report.responsibleUserName}</span>

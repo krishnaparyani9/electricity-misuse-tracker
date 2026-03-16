@@ -9,7 +9,7 @@ export default function calculateFine({
   watts,
   repeatedOffenseCount,
 }: FineInput): number {
-  const powerPenalty = Math.ceil(watts / 250) * 5;
-  const repeatPenalty = repeatedOffenseCount * 15;
-  return baseFine + powerPenalty + repeatPenalty;
+  void watts;
+  void repeatedOffenseCount;
+  return baseFine;
 }

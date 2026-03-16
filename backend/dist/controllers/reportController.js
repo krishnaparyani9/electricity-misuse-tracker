@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLeaderboard = exports.getReports = exports.createReport = void 0;
+exports.deleteReport = exports.getLeaderboard = exports.getReports = exports.createReport = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const Report_1 = __importDefault(require("../models/Report"));
 const storage_1 = require("../config/storage");
@@ -121,3 +121,20 @@ const getLeaderboard = async (_req, res) => {
     }
 };
 exports.getLeaderboard = getLeaderboard;
+const deleteReport = async (req, res) => {
+    const reportId = Number(req.params.id);
+    if (!Number.isInteger(reportId) || reportId <= 0) {
+        return res.status(400).json({ message: 'Invalid report id.' });
+    }
+    try {
+        const deleted = await Report_1.default.findOneAndDelete({ reportId });
+        if (!deleted) {
+            return res.status(404).json({ message: 'Report not found.' });
+        }
+        return res.status(204).send();
+    }
+    catch (error) {
+        return res.status(500).json({ message: 'Database error while deleting report.' });
+    }
+};
+exports.deleteReport = deleteReport;

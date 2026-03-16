@@ -77,4 +77,8 @@ export const createReportRequest = async (payload: {
   return data;
 };
 
+export const deleteReportRequest = async (reportId: number) => {
+  await api.delete(`/reports/${reportId}`);
+};
+
 export default api;

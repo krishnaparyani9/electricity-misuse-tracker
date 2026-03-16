@@ -11,4 +11,5 @@ const upload = (0, multer_1.default)({ storage: multer_1.default.memoryStorage()
 router.post('/report', upload.single('image'), reportController_1.createReport);
 router.get('/reports', reportController_1.getReports);
 router.get('/leaderboard', reportController_1.getLeaderboard);
+router.delete('/reports/:id', reportController_1.deleteReport);
 exports.default = router;
