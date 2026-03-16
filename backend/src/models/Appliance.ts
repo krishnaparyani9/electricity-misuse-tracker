@@ -1,0 +1,1 @@
+// Appliance model placeholder

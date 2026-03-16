@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    font-family: "Segoe UI Variable Display", "Trebuchet MS", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(252, 211, 77, 0.45), transparent 28%),
+      radial-gradient(circle at top right, rgba(14, 165, 233, 0.2), transparent 22%),
+      linear-gradient(180deg, #fff8eb 0%, #f8fafc 44%, #eef2ff 100%);
+    color: #0f172a;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .bg-app {
+    background:
+      radial-gradient(circle at 10% 10%, rgba(251, 191, 36, 0.24), transparent 24%),
+      radial-gradient(circle at 90% 0%, rgba(59, 130, 246, 0.14), transparent 22%),
+      linear-gradient(180deg, #fffef8 0%, #f8fafc 45%, #eef2ff 100%);
+  }
+
+  .hero-panel {
+    @apply rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8;
+  }
+
+  .badge {
+    @apply inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-amber-800;
+  }
+
+  .field {
+    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-950/10;
+  }
+
+  .metric-card {
+    @apply rounded-3xl bg-slate-950 p-4 text-white;
+  }
+
+  .metric-card span {
+    @apply block text-xs uppercase tracking-[0.2em] text-slate-300;
+  }
+
+  .metric-card strong {
+    @apply mt-3 block text-3xl font-black;
+  }
+
+  .stat-chip {
+    @apply rounded-3xl border border-white/80 bg-white/85 p-4 shadow-sm;
+  }
+
+  .stat-chip span {
+    @apply block text-xs uppercase tracking-[0.18em] text-slate-500;
+  }
+
+  .stat-chip strong {
+    @apply mt-2 block text-lg font-black text-slate-950;
+  }
+}
+
+body {
+  font-family: 'Segoe UI Variable Display', 'Trebuchet MS', sans-serif;
+}
