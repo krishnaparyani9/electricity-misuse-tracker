@@ -6,7 +6,7 @@ const userSchema = new mongoose_1.Schema({
     username: { type: String, required: true, unique: true, lowercase: true, trim: true },
     name: { type: String, required: true, trim: true },
     avatar: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, default: '' },
 }, { timestamps: true });
 const UserModel = (0, mongoose_1.model)('User', userSchema);
 exports.default = UserModel;

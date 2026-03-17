@@ -8,6 +8,7 @@ const appliances = [
     { id: 4, name: 'Washing Machine', baseFine: 15, watts: 500 },
     { id: 5, name: 'Geyser', baseFine: 25, watts: 2000 },
     { id: 6, name: 'Cooler', baseFine: 25, watts: 250 },
+    { id: 7, name: 'Light + Fan', baseFine: 10, watts: 135 },
 ];
 let reports = [];
 exports.store = {

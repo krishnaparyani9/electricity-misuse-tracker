@@ -27,14 +27,13 @@ const fetchAllUsers = async (): Promise<UserRecord[]> => {
 };
 
 export const signup = async (req: Request, res: Response) => {
-  const { username, name, password } = req.body as {
+  const { username, name } = req.body as {
     username?: string;
     name?: string;
-    password?: string;
   };
 
-  if (!username?.trim() || !name?.trim() || !password?.trim()) {
-    return res.status(400).json({ message: 'Name, username, and password are required.' });
+  if (!username?.trim() || !name?.trim()) {
+    return res.status(400).json({ message: 'Name and username are required.' });
   }
 
   try {
@@ -56,7 +55,7 @@ export const signup = async (req: Request, res: Response) => {
       username: normalizedUsername,
       name: trimmedName,
       avatar,
-      password,
+      password: '',
     });
 
     return res.status(201).json({
@@ -70,17 +69,17 @@ export const signup = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body as { username?: string; password?: string };
+  const { username } = req.body as { username?: string };
 
-  if (!username?.trim() || !password?.trim()) {
-    return res.status(400).json({ message: 'Username and password are required.' });
+  if (!username?.trim()) {
+    return res.status(400).json({ message: 'Username is required.' });
   }
 
   try {
     const user = await UserModel.findOne({ username: username.trim().toLowerCase() }).lean();
 
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: 'Invalid username or password.' });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username.' });
     }
 
     return res.json({

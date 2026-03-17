@@ -18,7 +18,6 @@ export type LoginResponse = {
 export type SignupPayload = {
   username: string;
   name: string;
-  password: string;
 };
 
 export type ReportsResponse = {
@@ -36,8 +35,8 @@ export const signupRequest = async (payload: SignupPayload) => {
   return data;
 };
 
-export const loginRequest = async (username: string, password: string) => {
-  const { data } = await api.post<LoginResponse>('/login', { username, password });
+export const loginRequest = async (username: string) => {
+  const { data } = await api.post<LoginResponse>('/login', { username });
   return data;
 };
 

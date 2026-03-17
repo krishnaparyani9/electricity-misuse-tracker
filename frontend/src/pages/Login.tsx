@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import type { AuthFormMode } from '../types';
 
 type LoginProps = {
-  onLogin: (username: string, password: string) => Promise<void>;
-  onSignup: (payload: { username: string; name: string; password: string }) => Promise<void>;
+  onLogin: (username: string) => Promise<void>;
+  onSignup: (payload: { username: string; name: string }) => Promise<void>;
   loading: boolean;
   error: string | null;
 };
@@ -11,17 +11,16 @@ type LoginProps = {
 const Login: React.FC<LoginProps> = ({ onLogin, onSignup, loading, error }) => {
   const [mode, setMode] = useState<AuthFormMode>('signup');
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (mode === 'signup') {
-      await onSignup({ username, name, password });
+      await onSignup({ username, name });
       return;
     }
 
-    await onLogin(username, password);
+    await onLogin(username);
   };
 
   return (
@@ -54,7 +53,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignup, loading, error }) => {
         <p className="mt-3 text-sm leading-6 text-slate-600">
           {mode === 'signup'
             ? 'Create a new resident profile for the shared flat, then continue directly to the dashboard.'
-            : 'Log in with the username and password you created during signup.'}
+            : 'Enter your username and continue directly to the dashboard.'}
         </p>
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
           {mode === 'signup' ? (
@@ -68,10 +67,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignup, loading, error }) => {
           <div>
             <label className="mb-2 block text-sm font-semibold text-slate-700">Username</label>
             <input value={username} onChange={(event) => setUsername(event.target.value)} className="field" placeholder="Choose a unique username" />
-          </div>
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">Password</label>
-            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="field" placeholder="Create a password" />
           </div>
           {error ? <p className="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">{error}</p> : null}
           <button type="submit" disabled={loading} className="w-full rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70">

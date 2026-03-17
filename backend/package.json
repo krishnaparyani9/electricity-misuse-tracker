@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "migrate:fines": "ts-node src/scripts/migrateLegacyFines.ts"
   },
   "dependencies": {
     "cloudinary": "^2.9.0",

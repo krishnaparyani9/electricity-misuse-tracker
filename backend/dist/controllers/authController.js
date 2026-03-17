@@ -17,9 +17,9 @@ const fetchAllUsers = async () => {
     return users.map(toPublicUser);
 };
 const signup = async (req, res) => {
-    const { username, name, password } = req.body;
-    if (!username?.trim() || !name?.trim() || !password?.trim()) {
-        return res.status(400).json({ message: 'Name, username, and password are required.' });
+    const { username, name } = req.body;
+    if (!username?.trim() || !name?.trim()) {
+        return res.status(400).json({ message: 'Name and username are required.' });
     }
     try {
         const normalizedUsername = username.trim().toLowerCase();
@@ -36,7 +36,7 @@ const signup = async (req, res) => {
             username: normalizedUsername,
             name: trimmedName,
             avatar,
-            password,
+            password: '',
         });
         return res.status(201).json({
             user: toPublicUser(user),
@@ -50,14 +50,14 @@ const signup = async (req, res) => {
 };
 exports.signup = signup;
 const login = async (req, res) => {
-    const { username, password } = req.body;
-    if (!username?.trim() || !password?.trim()) {
-        return res.status(400).json({ message: 'Username and password are required.' });
+    const { username } = req.body;
+    if (!username?.trim()) {
+        return res.status(400).json({ message: 'Username is required.' });
     }
     try {
         const user = await User_1.default.findOne({ username: username.trim().toLowerCase() }).lean();
-        if (!user || user.password !== password) {
-            return res.status(401).json({ message: 'Invalid username or password.' });
+        if (!user) {
+            return res.status(401).json({ message: 'Invalid username.' });
         }
         return res.json({
             user: toPublicUser(user),

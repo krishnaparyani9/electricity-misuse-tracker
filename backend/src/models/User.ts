@@ -5,7 +5,7 @@ export type UserDocument = {
 	username: string;
 	name: string;
 	avatar: string;
-	password: string;
+	password?: string;
 };
 
 const userSchema = new Schema<UserDocument>(
@@ -14,7 +14,7 @@ const userSchema = new Schema<UserDocument>(
 		username: { type: String, required: true, unique: true, lowercase: true, trim: true },
 		name: { type: String, required: true, trim: true },
 		avatar: { type: String, required: true },
-		password: { type: String, required: true },
+		password: { type: String, default: '' },
 	},
 	{ timestamps: true }
 );

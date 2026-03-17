@@ -55,21 +55,21 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
     navigate('/dashboard');
   };
 
-  const handleLogin = async (username: string, password: string) => {
+  const handleLogin = async (username: string) => {
     setLoginLoading(true);
     setError(null);
 
     try {
-      const response = await loginRequest(username, password);
+      const response = await loginRequest(username);
       await handleAuthSuccess(response);
     } catch (loginError) {
-      setError('Login failed. Check your username and password and try again.');
+      setError('Login failed. Check your username and try again.');
     } finally {
       setLoginLoading(false);
     }
   };
 
-  const handleSignup = async (payload: { username: string; name: string; password: string }) => {
+  const handleSignup = async (payload: { username: string; name: string }) => {
     setLoginLoading(true);
     setError(null);
 
