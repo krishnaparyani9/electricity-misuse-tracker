@@ -66,8 +66,8 @@ const serializeReport = (report: {
   createdAt: new Date(report.createdAt).toISOString(),
 });
 
-const countPreviousReports = async (responsibleUserId: number) =>
-  ReportModel.countDocuments({ responsibleUserId });
+const countPreviousReports = async (responsibleUserId: number, applianceId: number) =>
+  ReportModel.countDocuments({ responsibleUserId, applianceId });
 
 const getNextReportId = async () => {
   const lastReport = await ReportModel.findOne({}, { reportId: 1 }).sort({ reportId: -1 }).lean();
@@ -94,7 +94,7 @@ export const createReport = async (req: Request, res: Response) => {
     const fine = calculateFine({
       baseFine: appliance.baseFine,
       watts: appliance.watts,
-      repeatedOffenseCount: await countPreviousReports(responsibleUser.id),
+      repeatedOffenseCount: await countPreviousReports(responsibleUser.id, appliance.id),
     });
 
     const evidenceImage = req.file ? await saveEvidenceImage(req.file) : null;

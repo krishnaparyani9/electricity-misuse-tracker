@@ -20,12 +20,12 @@ export type ReportRecord = {
 };
 
 const appliances: Appliance[] = [
-  { id: 1, name: 'Induction', baseFine: 35, watts: 1800 },
-  { id: 2, name: 'Light', baseFine: 20, watts: 60 },
-  { id: 3, name: 'Fan', baseFine: 20, watts: 75 },
-  { id: 4, name: 'Washing Machine', baseFine: 40, watts: 500 },
-  { id: 5, name: 'Geyser', baseFine: 40, watts: 2000 },
-  { id: 6, name: 'Cooler', baseFine: 40, watts: 250 },
+  { id: 1, name: 'Induction', baseFine: 15, watts: 1800 },
+  { id: 2, name: 'Light', baseFine: 5, watts: 60 },
+  { id: 3, name: 'Fan', baseFine: 5, watts: 75 },
+  { id: 4, name: 'Washing Machine', baseFine: 15, watts: 500 },
+  { id: 5, name: 'Geyser', baseFine: 25, watts: 2000 },
+  { id: 6, name: 'Cooler', baseFine: 25, watts: 250 },
 ];
 
 let reports: ReportRecord[] = [];

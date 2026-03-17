@@ -43,7 +43,7 @@ const serializeReport = (report) => ({
     evidenceImage: report.evidenceImage,
     createdAt: new Date(report.createdAt).toISOString(),
 });
-const countPreviousReports = async (responsibleUserId) => Report_1.default.countDocuments({ responsibleUserId });
+const countPreviousReports = async (responsibleUserId, applianceId) => Report_1.default.countDocuments({ responsibleUserId, applianceId });
 const getNextReportId = async () => {
     const lastReport = await Report_1.default.findOne({}, { reportId: 1 }).sort({ reportId: -1 }).lean();
     return (lastReport?.reportId ?? 0) + 1;
@@ -60,7 +60,7 @@ const createReport = async (req, res) => {
         const fine = (0, fineCalculator_1.default)({
             baseFine: appliance.baseFine,
             watts: appliance.watts,
-            repeatedOffenseCount: await countPreviousReports(responsibleUser.id),
+            repeatedOffenseCount: await countPreviousReports(responsibleUser.id, appliance.id),
         });
         const evidenceImage = req.file ? await (0, storage_1.saveEvidenceImage)(req.file) : null;
         const report = await Report_1.default.create({

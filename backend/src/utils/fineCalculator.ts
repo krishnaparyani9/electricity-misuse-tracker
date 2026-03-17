@@ -10,6 +10,6 @@ export default function calculateFine({
   repeatedOffenseCount,
 }: FineInput): number {
   void watts;
-  void repeatedOffenseCount;
-  return baseFine;
+  const escalationSteps = Math.floor(repeatedOffenseCount / 10);
+  return baseFine + escalationSteps * 5;
 }

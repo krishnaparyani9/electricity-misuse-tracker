@@ -116,7 +116,7 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
         />
         <Route
           path="/report"
-          element={currentUser ? <Report appliances={appliances} users={users} currentUser={currentUser} onSubmit={handleReportSubmit} /> : <Navigate to="/" replace />}
+          element={currentUser ? <Report appliances={appliances} users={users} reports={reports} currentUser={currentUser} onSubmit={handleReportSubmit} /> : <Navigate to="/" replace />}
         />
         <Route path="/history" element={currentUser ? <History reports={reports} onDeleteReport={handleDeleteReport} /> : <Navigate to="/" replace />} />
       </Routes>
