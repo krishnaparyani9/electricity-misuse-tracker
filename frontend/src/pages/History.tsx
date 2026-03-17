@@ -1,9 +1,10 @@
 import React from 'react';
 import { getApiBaseUrl } from '../services/api';
-import type { Report } from '../types';
+import type { Report, User } from '../types';
 
 type HistoryProps = {
   reports: Report[];
+  currentUser: User;
   onDeleteReport: (reportId: number) => Promise<void>;
 };
 
@@ -16,7 +17,7 @@ const formatDate = (value: string) =>
 const apiBaseUrl = getApiBaseUrl();
 const getEvidenceUrl = (value: string) => (value.startsWith('http') ? value : `${apiBaseUrl}${value}`);
 
-const History: React.FC<HistoryProps> = ({ reports, onDeleteReport }) => (
+const History: React.FC<HistoryProps> = ({ reports, currentUser, onDeleteReport }) => (
   <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div className="mb-6">
       <p className="badge">History</p>
@@ -36,13 +37,15 @@ const History: React.FC<HistoryProps> = ({ reports, onDeleteReport }) => (
             </div>
             <div className="flex items-center gap-2">
               <p className="rounded-full bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">Rs. {report.fine}</p>
-              <button
-                type="button"
-                onClick={() => onDeleteReport(report.id)}
-                className="rounded-full border border-rose-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-rose-600 transition hover:border-rose-600 hover:bg-rose-50"
-              >
-                Delete
-              </button>
+              {report.reporterUserId === currentUser.id ? (
+                <button
+                  type="button"
+                  onClick={() => onDeleteReport(report.id)}
+                  className="rounded-full border border-rose-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-rose-600 transition hover:border-rose-600 hover:bg-rose-50"
+                >
+                  Delete
+                </button>
+              ) : null}
             </div>
           </div>
           <div className="mt-5 flex flex-wrap gap-3 text-sm text-slate-600">

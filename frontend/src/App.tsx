@@ -101,7 +101,11 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
   };
 
   const handleDeleteReport = async (reportId: number) => {
-    await deleteReportRequest(reportId);
+    if (!currentUser) {
+      return;
+    }
+
+    await deleteReportRequest(reportId, currentUser.id);
     await refreshData();
   };
 
@@ -118,7 +122,7 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
           path="/report"
           element={currentUser ? <Report appliances={appliances} users={users} reports={reports} currentUser={currentUser} onSubmit={handleReportSubmit} /> : <Navigate to="/" replace />}
         />
-        <Route path="/history" element={currentUser ? <History reports={reports} onDeleteReport={handleDeleteReport} /> : <Navigate to="/" replace />} />
+        <Route path="/history" element={currentUser ? <History reports={reports} currentUser={currentUser} onDeleteReport={handleDeleteReport} /> : <Navigate to="/" replace />} />
       </Routes>
     </div>
   );

@@ -123,14 +123,22 @@ const getLeaderboard = async (_req, res) => {
 exports.getLeaderboard = getLeaderboard;
 const deleteReport = async (req, res) => {
     const reportId = Number(req.params.id);
+    const requesterUserId = Number(req.query.requesterUserId);
     if (!Number.isInteger(reportId) || reportId <= 0) {
         return res.status(400).json({ message: 'Invalid report id.' });
     }
+    if (!Number.isInteger(requesterUserId) || requesterUserId <= 0) {
+        return res.status(400).json({ message: 'Invalid requester user id.' });
+    }
     try {
-        const deleted = await Report_1.default.findOneAndDelete({ reportId });
-        if (!deleted) {
+        const report = await Report_1.default.findOne({ reportId }, { _id: 0, responsibleUserId: 1, reporterUserId: 1 }).lean();
+        if (!report) {
             return res.status(404).json({ message: 'Report not found.' });
         }
+        if (report.reporterUserId !== requesterUserId) {
+            return res.status(403).json({ message: 'Only the reporting user can delete this report.' });
+        }
+        await Report_1.default.findOneAndDelete({ reportId });
         return res.status(204).send();
     }
     catch (error) {
