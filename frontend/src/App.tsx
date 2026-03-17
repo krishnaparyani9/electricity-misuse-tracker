@@ -18,9 +18,11 @@ import type { Appliance, LeaderboardEntry, Report as ReportType, User } from './
 type AppShellProps = {
   currentUser: User | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 };
 
-const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
+const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser, theme, onToggleTheme }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [appliances, setAppliances] = useState<Appliance[]>([]);
   const [reports, setReports] = useState<ReportType[]>([]);
@@ -110,8 +112,8 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
   };
 
   return (
-    <div className="min-h-screen bg-app text-slate-900">
-      <Navbar currentUser={currentUser} onLogout={handleLogout} />
+    <div className="min-h-screen bg-app text-slate-900 dark:text-slate-100">
+      <Navbar currentUser={currentUser} onLogout={handleLogout} theme={theme} onToggleTheme={onToggleTheme} />
       <Routes>
         <Route path="/" element={<Login onLogin={handleLogin} onSignup={handleSignup} loading={loginLoading} error={error} />} />
         <Route
@@ -130,10 +132,31 @@ const AppShell: React.FC<AppShellProps> = ({ currentUser, setCurrentUser }) => {
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') {
+      return 'light';
+    }
+
+    const savedTheme = window.localStorage.getItem('app-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      return savedTheme;
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    window.localStorage.setItem('app-theme', theme);
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((previous) => (previous === 'light' ? 'dark' : 'light'));
+  };
 
   return (
     <BrowserRouter>
-      <AppShell currentUser={currentUser} setCurrentUser={setCurrentUser} />
+      <AppShell currentUser={currentUser} setCurrentUser={setCurrentUser} theme={theme} onToggleTheme={handleToggleTheme} />
     </BrowserRouter>
   );
 };

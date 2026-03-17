@@ -22,11 +22,37 @@
     color: #0f172a;
   }
 
+  .dark body {
+    background:
+      radial-gradient(circle at top left, rgba(45, 212, 191, 0.18), transparent 30%),
+      radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 30%),
+      linear-gradient(180deg, #020617 0%, #0b1223 45%, #111827 100%);
+    color: #e2e8f0;
+  }
+
   button,
   input,
   select,
   textarea {
     font: inherit;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html,
+    body,
+    .bg-app,
+    .glass-panel,
+    .hero-panel,
+    .field,
+    .metric-card,
+    .stat-chip,
+    .badge {
+      transition:
+        background-color 280ms ease,
+        color 280ms ease,
+        border-color 280ms ease,
+        box-shadow 280ms ease;
+    }
   }
 }
 
@@ -38,20 +64,47 @@
       linear-gradient(180deg, #fffef8 0%, #f8fafc 45%, #eef2ff 100%);
   }
 
+  .dark .bg-app {
+    background:
+      radial-gradient(circle at 8% 12%, rgba(45, 212, 191, 0.16), transparent 28%),
+      radial-gradient(circle at 92% 0%, rgba(59, 130, 246, 0.2), transparent 24%),
+      linear-gradient(180deg, #020617 0%, #0b1223 48%, #111827 100%);
+  }
+
+  .glass-panel {
+    @apply rounded-[2rem] border border-white/60 bg-white/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.16)] backdrop-blur-xl;
+  }
+
+  .dark .glass-panel {
+    @apply border-white/10 bg-slate-900/55 shadow-[0_24px_80px_rgba(2,6,23,0.7)];
+  }
+
   .hero-panel {
-    @apply rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.08)] sm:p-8;
+    @apply glass-panel sm:p-8;
   }
 
   .badge {
     @apply inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-amber-800;
   }
 
+  .dark .badge {
+    @apply bg-cyan-500/20 text-cyan-200;
+  }
+
   .field {
-    @apply w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-950/10;
+    @apply w-full rounded-2xl border border-slate-200/90 bg-white/90 px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-950 focus:ring-4 focus:ring-slate-950/10;
+  }
+
+  .dark .field {
+    @apply border-slate-700 bg-slate-900/75 text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:ring-cyan-300/20;
   }
 
   .metric-card {
     @apply rounded-3xl bg-slate-950 p-4 text-white;
+  }
+
+  .dark .metric-card {
+    @apply bg-slate-800/80;
   }
 
   .metric-card span {
@@ -66,12 +119,24 @@
     @apply rounded-3xl border border-white/80 bg-white/85 p-4 shadow-sm;
   }
 
+  .dark .stat-chip {
+    @apply border-white/10 bg-slate-900/55;
+  }
+
   .stat-chip span {
     @apply block text-xs uppercase tracking-[0.18em] text-slate-500;
   }
 
+  .dark .stat-chip span {
+    @apply text-slate-400;
+  }
+
   .stat-chip strong {
     @apply mt-2 block text-lg font-black text-slate-950;
+  }
+
+  .dark .stat-chip strong {
+    @apply text-slate-100;
   }
 }
 

@@ -6,9 +6,9 @@ type FineTableProps = {
 };
 
 const FineTable: React.FC<FineTableProps> = ({ reports }) => (
-  <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/90 shadow-[0_24px_80px_rgba(15,23,42,0.08)]">
+  <div className="glass-panel overflow-hidden p-0">
     <table className="min-w-full text-left">
-      <thead className="bg-slate-950 text-sm uppercase tracking-[0.18em] text-white">
+      <thead className="bg-slate-950 text-sm uppercase tracking-[0.18em] text-white dark:bg-slate-800/90">
         <tr>
           <th className="px-5 py-4">Responsible</th>
           <th className="px-5 py-4">Appliance</th>
@@ -18,11 +18,11 @@ const FineTable: React.FC<FineTableProps> = ({ reports }) => (
       </thead>
       <tbody>
         {reports.map((report) => (
-          <tr key={report.id} className="border-t border-slate-200/70 text-sm text-slate-700">
-            <td className="px-5 py-4 font-semibold text-slate-900">{report.responsibleUserName}</td>
+          <tr key={report.id} className="border-t border-slate-200/70 text-sm text-slate-700 dark:border-slate-700 dark:text-slate-300">
+            <td className="px-5 py-4 font-semibold text-slate-900 dark:text-slate-100">{report.responsibleUserName}</td>
             <td className="px-5 py-4">{report.applianceName}</td>
             <td className="px-5 py-4">{report.reporterUserName}</td>
-            <td className="px-5 py-4 font-bold text-rose-600">Rs. {report.fine}</td>
+            <td className="px-5 py-4 font-bold text-rose-600 dark:text-rose-300">Rs. {report.fine}</td>
           </tr>
         ))}
       </tbody>
